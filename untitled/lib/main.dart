@@ -44,12 +44,23 @@ class ProfileCard extends StatelessWidget {
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8.0),
-            const Row(
+            Row(
               children: <Widget>[
                 CircleAvatar(
                   radius: 50,
                   backgroundColor: Colors.transparent,
-                  backgroundImage: NetworkImage('https://picsum.photos/200/300?grayscale'),
+                  child: ClipOval(
+                    child: Image.network(
+                      'https://picsum.photos/200/300?grayscale',
+                      fit: BoxFit.cover,
+                      width: 50,
+                      height: 50,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return SizedBox.shrink(); // Hide image while loading
+                      },
+                    ),
+                  ),
                 ),
                 SizedBox(width: 8.0),
                 Text('iOS Developer'),
